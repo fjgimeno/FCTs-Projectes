@@ -2,11 +2,13 @@
 
 ## FCTDiaryAuto
 
+# I AM NOT RESPONSIBLE OF ANY DAMAGE THE MISUSE OF THIS APP CAN CAUSE, MODIFY IT AT YOUR OWN RISK
+
 Selenium chromedriver is needed in order for the app to work, you will need to install it in the following directory:
 
 	C:\Program Files\Google\Chrome\Application\chromedriver.exe
 	
-Alternatively, change line 49 of "FCTDiaryAuto.java" class to the apropiate route. (Do not forget to scape backslashes. Ex. "\\\\").
+Alternatively, change line 49 of "FCTDiaryAuto.java" class to the apropiate route. ((Windows users)Do not forget to scape backslashes. Ex. "\\\\").
 
 	
 [Download it from here!](https://chromedriver.storage.googleapis.com/90.0.4430.24/chromedriver_win32.zip)
