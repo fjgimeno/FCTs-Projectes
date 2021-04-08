@@ -20,3 +20,21 @@ Execute the app with two args in order for it to work:
 Example of how you should execute the app once the jar has been built:
 
 	java -jar .\FCTDiaryAuto.jar username password
+	
+An example of a Spreadsheet to use with the programm has also been included("ExampleFCTDiaryAuto Spreadsheet.csv").
+
+Do not edit the layout of the spreadsheet unless needed.
+
+Always groud each week in a group including 5 days, or the amount of days weekly you work.
+
+Example:
+
+	FECHA;Desc. General;Orientaciones;Observaciones;Horas		/*Do not forget to add this line first in the csv*/
+	29 de Marzo de 2021;;;;0
+	30 de Marzo de 2021;;;;0
+	31 de Marzo de 2021;;;;0
+	01 de Abril de 2021;;;;0
+	02 de Abril de 2021;;;;0
+	;;;;														/*Do not forget to add this line too in the csv, as it's used to separate each week and the app won't work without it*/
+
+	
