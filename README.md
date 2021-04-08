@@ -6,15 +6,17 @@ Selenium chromedriver is needed in order for the app to work, you will need to i
 
 	C:\Program Files\Google\Chrome\Application\chromedriver.exe
 	
-Alternatively, change line 49 of "FCTDiaryAuto.java" class to the apropiate route. (Do not forget scapping backslashes. Ex. "\\\\").
+Alternatively, change line 49 of "FCTDiaryAuto.java" class to the apropiate route. (Do not forget to scape backslashes. Ex. "\\\\").
 
 	
-Download it from the following url:
-
-	[Download here!](https://chromedriver.storage.googleapis.com/90.0.4430.24/chromedriver_win32.zip)
+[Download it from here!](https://chromedriver.storage.googleapis.com/90.0.4430.24/chromedriver_win32.zip)
 	
 Execute the app with two args in order for it to work:
 
 	arg1: username
 	
 	arg2: password
+	
+Example of how you should execute the app once the jar has been built:
+
+	java -jar .\FCTDiaryAuto.jar username password
