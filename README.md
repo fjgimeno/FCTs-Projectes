@@ -35,6 +35,6 @@ Example:
 	31 de Marzo de 2021;;;;0
 	01 de Abril de 2021;;;;0
 	02 de Abril de 2021;;;;0
-	;;;;														/*Do not forget to add this line too in the csv, as it's used to separate each week and the app won't work without it*/
+	;;;;		/*Do not forget to add this line too in the csv, as it's used to separate each week and the app won't work without it*/
 
 	
