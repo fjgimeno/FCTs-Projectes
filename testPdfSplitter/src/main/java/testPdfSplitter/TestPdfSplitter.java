@@ -1,6 +1,7 @@
 package testPdfSplitter;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.swing.JFileChooser;
@@ -11,34 +12,42 @@ import org.apache.pdfbox.multipdf.Splitter;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
 public class TestPdfSplitter {
-	private static PDDocument doc = null;
-	private static File file = null;
-	private static int start = 0, end = 0;
-
-	private static void splitPdf(int startIndex, int endIndex) {
-		if (doc.getNumberOfPages() > endIndex) {
-			System.out.println(doc.getDocumentInformation().getTitle());
-			try {
-				Splitter splitter = new Splitter();
-				splitter.setSplitAtPage(endIndex - startIndex + 1);
-				List<PDDocument> splittedList = splitter.split(doc);
-				start = 1;
-				end = endIndex;
-				for (PDDocument doc : splittedList) {
-					System.out.println("Start: " + start + " End: " + (start + (doc.getNumberOfPages() - 1)) + " Num pag: " + doc.getNumberOfPages());
-					doc.save(file.getParent() + System.getProperty("file.separator")
-							+ file.getName().substring(0, file.getName().length() - 4) + "_" + start + "-" + (start + (doc.getNumberOfPages() - 1)) + ".pdf");
-					start = end + 1;
-					end = end + endIndex;
-					doc.close();
+	public static void splitPdf(File file, int nPages) {		
+		try {
+			PDDocument sourceDoc;
+			sourceDoc = Loader.loadPDF(file);
+			int start = 0, end = 0;
+			if (sourceDoc.getNumberOfPages() > nPages) {
+				try {
+					Splitter splitter = new Splitter();
+					// Indicates how many pages each "cut" from the document will have .
+					// (if you have a document of 500 pages and split it in documents of 5 pages each, you will have 250 documents of 2 pages).
+					splitter.setSplitAtPage(nPages);
+					List<PDDocument> splittedList = splitter.split(sourceDoc);
+					start = 1;
+					end = nPages;
+					for (PDDocument doc : splittedList) {
+						doc.save(file.getParent() + System.getProperty("file.separator")
+								+ file.getName().substring(0, file.getName().length() - 4) + "_" + start + "-" + (start + (doc.getNumberOfPages() - 1)) + ".pdf");
+						// this variables are used to give each generated file a proper name (Ex: document_1-5.pdf, where 1 is "start" and 5 is "end")
+						// they will increase their value each time the loop does on cycle.
+						start = end + 1;
+						end = end + nPages;
+						// Closes the document once each pdf is saved
+						doc.close();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 
 	public static void main(String[] args) throws Exception {
+		File file = null;
 		JFileChooser fc = new JFileChooser();
 
 		fc.setFileFilter(new FileNameExtensionFilter("Documento (PDF)", "pdf"));
@@ -49,38 +58,13 @@ public class TestPdfSplitter {
 			if (!file.getName().contains(".pdf")) {
 				throw new Exception("Selected incorrect file type");
 			} else {
-				// Loading an existing PDF document
-				// File file = new File("C:/pdfBox/splitpdf_IP.pdf");
-				doc = Loader.loadPDF(file);
-				splitPdf(1, 3);
-				
+				// Calls the split PDF method, sending it the file to split, and the number of pages
+				splitPdf(file, 2);
+				// Shows a message once everything is done
 				System.out.println("PDF splitted");
 			}
 		} else {
 			System.out.println("Operation canceled by the user");
-		}
-
-		
-
-		// Instantiating Splitter class
-		// Splitter splitter = new Splitter();
-
-		// splitting the pages of a PDF document
-		// List<PDDocument> Pages = splitter.split(doc);
-
-		// Creating an iterator
-		// Iterator<PDDocument> iterator = Pages.listIterator();
-
-		// Saving each page as an individual document
-		//int i = 1;
-
-		/*
-		 * while (iterator.hasNext()) { PDDocument pd = iterator.next();
-		 * pd.save(file.getParent() + System.getProperty("file.separator") +
-		 * file.getName().substring(0, file.getName().length() - 4) + "_split_" + i++ +
-		 * ".pdf"); }
-		 */
-		
+		}		
 	}
-
 }
