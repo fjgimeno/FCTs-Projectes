@@ -12,7 +12,7 @@ import org.apache.pdfbox.multipdf.Splitter;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
 public class TestPdfSplitter {
-	public static void splitPdf(File file, int nPages) {		
+	public static void splitPdf(File file, int nPages) {
 		try {
 			PDDocument sourceDoc;
 			sourceDoc = Loader.loadPDF(file);
@@ -21,15 +21,26 @@ public class TestPdfSplitter {
 				try {
 					Splitter splitter = new Splitter();
 					// Indicates how many pages each "cut" from the document will have .
-					// (if you have a document of 500 pages and split it in documents of 5 pages each, you will have 250 documents of 2 pages).
+					// (if you have a document of 500 pages and split it in documents of 5 pages
+					// each, you will have 250 documents of 2 pages).
 					splitter.setSplitAtPage(nPages);
 					List<PDDocument> splittedList = splitter.split(sourceDoc);
 					start = 1;
 					end = nPages;
 					for (PDDocument doc : splittedList) {
+						/*
+						 * Saves the document with the added route and name, it is best to give it an
+						 * absolute route, in this example, i've used the source file to get the parent
+						 * folder's route, also, generates a name for the new file based on the name of
+						 * the original name removing it's extension
+						 * ("file.getName().substring(0, file.getName().length() - 4)"), then, gives it
+						 * a number to differenciate each document, and lastly, gives it an extension.
+						 */
 						doc.save(file.getParent() + System.getProperty("file.separator")
-								+ file.getName().substring(0, file.getName().length() - 4) + "_" + start + "-" + (start + (doc.getNumberOfPages() - 1)) + ".pdf");
-						// this variables are used to give each generated file a proper name (Ex: document_1-5.pdf, where 1 is "start" and 5 is "end")
+								+ file.getName().substring(0, file.getName().length() - 4) + "_" + start + "-"
+								+ (start + (doc.getNumberOfPages() - 1)) + ".pdf");
+						// this variables are used to give each generated file a proper name (Ex:
+						// document_1-5.pdf, where 1 is "start" and 5 is "end")
 						// they will increase their value each time the loop does on cycle.
 						start = end + 1;
 						end = end + nPages;
@@ -58,13 +69,14 @@ public class TestPdfSplitter {
 			if (!file.getName().contains(".pdf")) {
 				throw new Exception("Selected incorrect file type");
 			} else {
-				// Calls the split PDF method, sending it the file to split, and the number of pages
+				// Calls the split PDF method, sending it the file to split, and the number of
+				// pages
 				splitPdf(file, 2);
 				// Shows a message once everything is done
 				System.out.println("PDF splitted");
 			}
 		} else {
 			System.out.println("Operation canceled by the user");
-		}		
+		}
 	}
 }
